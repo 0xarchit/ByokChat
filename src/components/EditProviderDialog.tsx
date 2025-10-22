@@ -155,7 +155,7 @@ export function EditProviderDialog({
 
     setIsFetchingModels(true);
     try {
-      const modelsUrl = apiUrl.replace(/\/+$/, "") + "/v1/models";
+      const modelsUrl = apiUrl.replace(/\/+$/, "") + "/models";
 
       const response = await fetch(modelsUrl, {
         headers: {
