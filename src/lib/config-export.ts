@@ -42,7 +42,7 @@ export async function exportCompleteConfig(): Promise<void> {
       type: "application/json",
     });
 
-    const fileName = `nexus-chatter-config-${
+    const fileName = `byok-chat-config-${
       new Date().toISOString().split("T")[0]
     }.json`;
 
@@ -118,7 +118,7 @@ export async function exportProvidersOnly(): Promise<void> {
       type: "application/json",
     });
 
-    const fileName = `nexus-chatter-providers-${
+    const fileName = `byok-chat-providers-${
       new Date().toISOString().split("T")[0]
     }.json`;
 
