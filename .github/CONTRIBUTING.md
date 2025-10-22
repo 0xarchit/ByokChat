@@ -1,6 +1,6 @@
-# Contributing to CustomChats
+# Contributing to BYOK Chat
 
-Thank you for considering contributing to CustomChats! We welcome contributions from everyone. By participating in this project, you agree to abide by our code of conduct.
+Thank you for considering contributing to BYOK Chat! We welcome contributions from everyone. By participating in this project, you agree to abide by our code of conduct.
 
 ## How to Contribute
 

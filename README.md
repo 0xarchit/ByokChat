@@ -45,7 +45,7 @@ BYOK Chat is a versatile platform designed to integrate with various AI provider
 1. Clone the repository:
    ```bash
    git clone <repository-url>
-   cd CustomChats
+   cd BYOK Chat
    ```
 
 2. Install dependencies:
