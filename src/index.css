@@ -1,0 +1,547 @@
+@import "katex/dist/katex.min.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 188 95% 50%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 188 95% 50%;
+    --radius: 0.5rem;
+
+    --chat-user-bg: 188 95% 50%;
+    --chat-assistant-bg: 0 0% 98%;
+    --sidebar-width: 280px;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 188 95% 50%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 188 95% 50%;
+
+    --chat-user-bg: 188 95% 50%;
+    --chat-assistant-bg: 217.2 32.6% 17.5%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .cyber-aurora {
+    --background: 222 47% 5%;
+    --foreground: 180 100% 90%;
+    --card: 222 47% 8%;
+    --card-foreground: 180 100% 90%;
+    --popover: 222 47% 8%;
+    --popover-foreground: 180 100% 90%;
+    --primary: 180 95% 55%;
+    --primary-foreground: 222 47% 11%;
+    --secondary: 160 80% 50%;
+    --secondary-foreground: 180 100% 90%;
+    --muted: 222 47% 15%;
+    --muted-foreground: 180 20% 70%;
+    --accent: 173 80% 40%;
+    --accent-foreground: 180 100% 90%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 180 100% 90%;
+    --border: 180 30% 20%;
+    --input: 180 30% 20%;
+    --ring: 180 95% 55%;
+
+    --chat-user-bg: 180 95% 55%;
+    --chat-assistant-bg: 222 47% 12%;
+    --sidebar-background: 222 47% 8%;
+    --sidebar-foreground: 180 100% 90%;
+    --sidebar-primary: 180 95% 55%;
+    --sidebar-primary-foreground: 222 47% 11%;
+    --sidebar-accent: 222 47% 15%;
+    --sidebar-accent-foreground: 180 100% 90%;
+    --sidebar-border: 180 30% 20%;
+    --sidebar-ring: 180 95% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      sans-serif;
+  }
+}
+
+@layer utilities {
+  .glass-effect {
+    @apply backdrop-blur-xl bg-background/50 border border-border/50;
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgba(155, 155, 155, 0.5);
+    border-radius: 3px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(155, 155, 155, 0.7);
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+.katex-display {
+  @apply my-4 overflow-x-auto overflow-y-hidden;
+}
+
+.katex {
+  @apply text-base;
+}
+
+.markdown-content {
+  @apply break-words;
+  width: 100%;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  line-height: 1.75;
+}
+
+.markdown-content * {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.markdown-content > * {
+  max-width: 100%;
+  margin-top: 0.75em;
+  margin-bottom: 0.75em;
+}
+
+.markdown-content > *:first-child {
+  margin-top: 0;
+}
+
+.markdown-content > *:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-content h1 {
+  @apply text-2xl font-bold mt-6 mb-4;
+}
+
+.markdown-content h2 {
+  @apply text-xl font-bold mt-5 mb-3;
+}
+
+.markdown-content h3 {
+  @apply text-lg font-semibold mt-4 mb-2;
+}
+
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+  @apply text-base font-semibold mt-3 mb-2;
+}
+
+.markdown-content p {
+  @apply my-3 leading-relaxed;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  @apply my-3 pl-6 space-y-1;
+}
+
+.markdown-content li {
+  @apply leading-relaxed;
+}
+
+.markdown-content a {
+  @apply text-primary hover:underline;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
+
+.markdown-content strong {
+  @apply font-semibold;
+}
+
+.markdown-content em {
+  @apply italic;
+}
+
+.markdown-content blockquote {
+  @apply border-l-4 border-muted-foreground/30 pl-4 my-4 italic text-muted-foreground;
+}
+
+.markdown-content hr {
+  @apply my-6 border-border;
+}
+
+.markdown-content pre {
+  @apply overflow-x-auto my-4 rounded-lg;
+  max-width: 100%;
+  border-radius: 0.5rem;
+  width: 100%;
+}
+
+.markdown-content pre code {
+  word-break: normal;
+  overflow-wrap: normal;
+  white-space: pre;
+  display: block;
+  @apply text-sm leading-relaxed;
+}
+
+.markdown-content code {
+  overflow-wrap: anywhere;
+  font-size: 0.875em;
+  @apply bg-muted px-1.5 py-0.5 rounded;
+}
+
+.markdown-content pre code {
+  @apply bg-transparent p-0;
+}
+
+.markdown-content table {
+  width: 100%;
+  @apply my-4 text-sm border-collapse rounded-lg overflow-hidden;
+  min-width: max-content;
+  table-layout: auto;
+}
+
+.markdown-content thead {
+  @apply bg-muted;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.markdown-content th {
+  @apply font-semibold text-left px-4 py-3 border-b border-border;
+  white-space: nowrap;
+}
+
+.markdown-content td {
+  @apply px-4 py-3 border-b border-border/50;
+  white-space: nowrap;
+}
+
+.markdown-content tbody tr:hover {
+  @apply bg-muted/50;
+}
+
+.markdown-content img {
+  max-width: 100%;
+  height: auto;
+  @apply rounded-lg my-4;
+}
+
+.markdown-content > div {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.markdown-content .relative.group {
+  max-width: 100%;
+  width: 100%;
+}
+
+.overflow-x-auto::-webkit-scrollbar,
+.overflow-y-auto::-webkit-scrollbar,
+.markdown-content pre::-webkit-scrollbar,
+.markdown-content table::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-track,
+.overflow-y-auto::-webkit-scrollbar-track,
+.markdown-content pre::-webkit-scrollbar-track,
+.markdown-content table::-webkit-scrollbar-track {
+  @apply bg-muted/30 rounded;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb,
+.overflow-y-auto::-webkit-scrollbar-thumb,
+.markdown-content pre::-webkit-scrollbar-thumb,
+.markdown-content table::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/40 rounded hover:bg-muted-foreground/60;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--muted-foreground) / 0.4) hsl(var(--muted) / 0.3);
+}
+
+.markdown-content > *:first-child {
+  @apply mt-0;
+}
+
+.markdown-content > *:last-child {
+  @apply mb-0;
+}
+
+.mermaid-container {
+  @apply overflow-x-auto overflow-y-auto max-h-[600px];
+}
+
+.mermaid-container svg {
+  @apply max-w-full h-auto;
+}
+
+@media (max-width: 1024px) {
+  .sidebar-overlay {
+    @apply fixed inset-0 bg-background/80 backdrop-blur-sm;
+  }
+}
+
+@media (max-width: 640px) {
+  .markdown-content {
+    @apply text-sm;
+  }
+
+  .markdown-content h1 {
+    @apply text-xl;
+  }
+
+  .markdown-content h2 {
+    @apply text-lg;
+  }
+
+  .markdown-content h3 {
+    @apply text-base;
+  }
+
+  .markdown-content h4,
+  .markdown-content h5,
+  .markdown-content h6 {
+    @apply text-sm;
+  }
+
+  .markdown-content pre {
+    @apply text-xs;
+  }
+
+  .markdown-content code:not(pre code) {
+    @apply text-xs;
+  }
+
+  .markdown-content table {
+    font-size: 0.75rem;
+  }
+
+  .markdown-content th,
+  .markdown-content td {
+    @apply px-2 py-2;
+  }
+}
+
+@media (max-width: 380px) {
+  .markdown-content {
+    @apply text-xs;
+  }
+
+  .markdown-content h1 {
+    @apply text-lg;
+  }
+
+  .markdown-content h2 {
+    @apply text-base;
+  }
+
+  .markdown-content h3 {
+    @apply text-sm;
+  }
+
+  .markdown-content table {
+    font-size: 0.625rem;
+  }
+
+  .markdown-content th,
+  .markdown-content td {
+    @apply px-1.5 py-1.5;
+  }
+}
+
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+body * {
+  min-width: 0;
+}
+
+.markdown-content img,
+.markdown-content video,
+.markdown-content iframe,
+.markdown-content svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.markdown-content pre,
+.markdown-content code {
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
+}
+
+.markdown-content pre::-webkit-scrollbar,
+.markdown-content code::-webkit-scrollbar {
+  height: 6px;
+}
+
+.markdown-content pre::-webkit-scrollbar-track,
+.markdown-content code::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.markdown-content pre::-webkit-scrollbar-thumb,
+.markdown-content code::-webkit-scrollbar-thumb {
+  background-color: rgba(155, 155, 155, 0.5);
+  border-radius: 3px;
+}
+
+.markdown-content table {
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.markdown-content p,
+.markdown-content li {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+.prose {
+  @apply text-foreground;
+}
+
+.prose p {
+  @apply leading-relaxed;
+}
+
+.prose a {
+  @apply text-primary hover:text-primary/80 transition-colors;
+}
+
+.prose code {
+  @apply text-sm;
+}
+
+.prose pre {
+  @apply bg-muted;
+}
+
+.prose img {
+  @apply rounded-lg;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-primary/50 pl-4 italic;
+}
+
+.dark .prose {
+  @apply text-foreground;
+}
+
+.dark .prose h1,
+.dark .prose h2,
+.dark .prose h3,
+.dark .prose h4 {
+  @apply text-foreground;
+}
+
+.dark .prose strong {
+  @apply text-foreground;
+}
+
+.dark .prose code {
+  @apply text-foreground;
+}
+
+.dark .prose blockquote {
+  @apply text-muted-foreground border-primary/50;
+}
