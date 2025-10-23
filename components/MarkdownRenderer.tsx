@@ -4,12 +4,55 @@ import remarkMath from "remark-math";
 import remarkGfm from "remark-gfm";
 import rehypeKatex from "rehype-katex";
 import rehypeRaw from "rehype-raw";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
+import { atomOneDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { MermaidDiagram } from "./MermaidDiagram";
 import { Copy, Check } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
+
+// Import languages for highlight.js (no refractor dependency)
+import javascript from "react-syntax-highlighter/dist/esm/languages/hljs/javascript";
+import typescript from "react-syntax-highlighter/dist/esm/languages/hljs/typescript";
+import python from "react-syntax-highlighter/dist/esm/languages/hljs/python";
+import java from "react-syntax-highlighter/dist/esm/languages/hljs/java";
+import c from "react-syntax-highlighter/dist/esm/languages/hljs/c";
+import cpp from "react-syntax-highlighter/dist/esm/languages/hljs/cpp";
+import csharp from "react-syntax-highlighter/dist/esm/languages/hljs/csharp";
+import php from "react-syntax-highlighter/dist/esm/languages/hljs/php";
+import ruby from "react-syntax-highlighter/dist/esm/languages/hljs/ruby";
+import go from "react-syntax-highlighter/dist/esm/languages/hljs/go";
+import rust from "react-syntax-highlighter/dist/esm/languages/hljs/rust";
+import sql from "react-syntax-highlighter/dist/esm/languages/hljs/sql";
+import bash from "react-syntax-highlighter/dist/esm/languages/hljs/bash";
+import json from "react-syntax-highlighter/dist/esm/languages/hljs/json";
+import yaml from "react-syntax-highlighter/dist/esm/languages/hljs/yaml";
+import markdown from "react-syntax-highlighter/dist/esm/languages/hljs/markdown";
+import css from "react-syntax-highlighter/dist/esm/languages/hljs/css";
+import xml from "react-syntax-highlighter/dist/esm/languages/hljs/xml";
+
+// Register languages
+SyntaxHighlighter.registerLanguage("javascript", javascript);
+SyntaxHighlighter.registerLanguage("typescript", typescript);
+SyntaxHighlighter.registerLanguage("python", python);
+SyntaxHighlighter.registerLanguage("java", java);
+SyntaxHighlighter.registerLanguage("c", c);
+SyntaxHighlighter.registerLanguage("cpp", cpp);
+SyntaxHighlighter.registerLanguage("csharp", csharp);
+SyntaxHighlighter.registerLanguage("php", php);
+SyntaxHighlighter.registerLanguage("ruby", ruby);
+SyntaxHighlighter.registerLanguage("go", go);
+SyntaxHighlighter.registerLanguage("rust", rust);
+SyntaxHighlighter.registerLanguage("sql", sql);
+SyntaxHighlighter.registerLanguage("bash", bash);
+SyntaxHighlighter.registerLanguage("json", json);
+SyntaxHighlighter.registerLanguage("yaml", yaml);
+SyntaxHighlighter.registerLanguage("markdown", markdown);
+SyntaxHighlighter.registerLanguage("css", css);
+SyntaxHighlighter.registerLanguage("html", xml);
+SyntaxHighlighter.registerLanguage("xml", xml);
+SyntaxHighlighter.registerLanguage("jsx", javascript); // Use javascript for JSX
+SyntaxHighlighter.registerLanguage("tsx", typescript); // Use typescript for TSX
 
 interface MarkdownRendererProps {
   content: string;
@@ -209,7 +252,7 @@ export const MarkdownRenderer = memo(
                 </blockquote>
               );
             },
-            a({ node, children, href, ...props }: any) {
+            a({ node, children, href, ...props }) {
               return (
                 <a
                   href={href}
@@ -263,7 +306,7 @@ const CodeBlock = memo(
         </Button>
         <div className="overflow-x-auto rounded-md sm:rounded-lg max-w-full scrollbar-thin">
           <SyntaxHighlighter
-            style={oneDark}
+            style={atomOneDark}
             language={language || "text"}
             PreTag="div"
             className="!my-0 !rounded-md sm:!rounded-lg text-xs sm:text-sm"
