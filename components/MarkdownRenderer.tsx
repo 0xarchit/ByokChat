@@ -65,7 +65,7 @@ export const MarkdownRenderer = memo(
 
               return <CodeBlock language={language} code={code} />;
             },
-            table({ node, children, ...props }) {
+            table({ node, children, ...props }: any) {
               return (
                 <div className="my-4 sm:my-6 w-full max-w-full overflow-hidden">
                   <div className="border rounded-lg shadow-sm overflow-hidden">
@@ -81,14 +81,14 @@ export const MarkdownRenderer = memo(
                 </div>
               );
             },
-            thead({ node, children, ...props }) {
+            thead({ node, children, ...props }: any) {
               return (
                 <thead className="bg-muted sticky top-0 z-10" {...props}>
                   {children}
                 </thead>
               );
             },
-            tbody({ node, children, ...props }) {
+            tbody({ node, children, ...props }: any) {
               return (
                 <tbody
                   className="bg-background divide-y divide-border"
@@ -98,14 +98,14 @@ export const MarkdownRenderer = memo(
                 </tbody>
               );
             },
-            tr({ node, children, ...props }) {
+            tr({ node, children, ...props }: any) {
               return (
                 <tr className="hover:bg-muted/30 transition-colors" {...props}>
                   {children}
                 </tr>
               );
             },
-            th({ node, children, ...props }) {
+            th({ node, children, ...props }: any) {
               return (
                 <th
                   className="px-3 py-2 sm:px-4 sm:py-2.5 md:px-6 md:py-3 text-left text-[10px] xs:text-xs font-bold text-foreground uppercase tracking-wider border-r border-border last:border-r-0 whitespace-nowrap bg-muted/80"
@@ -115,7 +115,7 @@ export const MarkdownRenderer = memo(
                 </th>
               );
             },
-            td({ node, children, ...props }) {
+            td({ node, children, ...props }: any) {
               return (
                 <td
                   className="px-3 py-2 sm:px-4 sm:py-3 md:px-6 md:py-4 text-[10px] xs:text-xs sm:text-sm text-foreground border-r border-border last:border-r-0 whitespace-nowrap"
@@ -125,14 +125,14 @@ export const MarkdownRenderer = memo(
                 </td>
               );
             },
-            p({ node, children, ...props }) {
+            p({ node, children, ...props }: any) {
               return (
                 <p className="my-2 sm:my-3 leading-relaxed" {...props}>
                   {children}
                 </p>
               );
             },
-            ul({ node, children, ...props }) {
+            ul({ node, children, ...props }: any) {
               return (
                 <ul
                   className="my-2 sm:my-3 ml-4 sm:ml-6 list-disc space-y-1 sm:space-y-2"
@@ -142,7 +142,7 @@ export const MarkdownRenderer = memo(
                 </ul>
               );
             },
-            ol({ node, children, ...props }) {
+            ol({ node, children, ...props }: any) {
               return (
                 <ol
                   className="my-2 sm:my-3 ml-4 sm:ml-6 list-decimal space-y-1 sm:space-y-2"
@@ -152,14 +152,14 @@ export const MarkdownRenderer = memo(
                 </ol>
               );
             },
-            li({ node, children, ...props }) {
+            li({ node, children, ...props }: any) {
               return (
                 <li className="leading-relaxed" {...props}>
                   {children}
                 </li>
               );
             },
-            h1({ node, children, ...props }) {
+            h1({ node, children, ...props }: any) {
               return (
                 <h1
                   className="text-lg sm:text-xl md:text-2xl font-bold mt-4 sm:mt-5 md:mt-6 mb-3 sm:mb-4"
@@ -169,7 +169,7 @@ export const MarkdownRenderer = memo(
                 </h1>
               );
             },
-            h2({ node, children, ...props }) {
+            h2({ node, children, ...props }: any) {
               return (
                 <h2
                   className="text-base sm:text-lg md:text-xl font-bold mt-3 sm:mt-4 md:mt-5 mb-2 sm:mb-3"
@@ -179,7 +179,7 @@ export const MarkdownRenderer = memo(
                 </h2>
               );
             },
-            h3({ node, children, ...props }) {
+            h3({ node, children, ...props }: any) {
               return (
                 <h3
                   className="text-sm sm:text-base md:text-lg font-semibold mt-3 sm:mt-4 mb-2"
@@ -189,7 +189,7 @@ export const MarkdownRenderer = memo(
                 </h3>
               );
             },
-            h4({ node, children, ...props }) {
+            h4({ node, children, ...props }: any) {
               return (
                 <h4
                   className="text-sm sm:text-base font-semibold mt-2 sm:mt-3 mb-1.5 sm:mb-2"
@@ -199,7 +199,7 @@ export const MarkdownRenderer = memo(
                 </h4>
               );
             },
-            blockquote({ node, children, ...props }) {
+            blockquote({ node, children, ...props }: any) {
               return (
                 <blockquote
                   className="border-l-2 sm:border-l-4 border-primary pl-3 sm:pl-4 py-1.5 sm:py-2 my-3 sm:my-4 italic text-muted-foreground bg-muted/30 rounded-r text-xs sm:text-sm"
@@ -209,7 +209,7 @@ export const MarkdownRenderer = memo(
                 </blockquote>
               );
             },
-            a({ node, children, href, ...props }) {
+            a({ node, children, href, ...props }: any) {
               return (
                 <a
                   href={href}
@@ -222,7 +222,7 @@ export const MarkdownRenderer = memo(
                 </a>
               );
             },
-            hr({ node, ...props }) {
+            hr({ node, ...props }: any) {
               return <hr className="my-6 border-border" {...props} />;
             },
           }}
