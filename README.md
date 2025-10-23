@@ -147,6 +147,38 @@ byok-chat/
 └── public/              # Static assets
 ```
 
+## Context management & summarization
+
+This project includes built-in context management features designed to keep conversations coherent while staying within model context windows and token limits. The system balances retaining recent, relevant messages with periodic summarization of older content so the model keeps essential context without sending the entire chat history.
+
+Key behaviors
+- Automatic summarization: After a configurable number of recent messages (default: 20) the app will create a concise summary of the previous segment of the conversation and store it with the chat. Future requests include that summary as system context so the assistant retains the important facts and decisions from earlier messages.
+- Context windowing: The app keeps the most recent N messages (configurable per chat and globally; default: 10) and forwards them along with the latest user prompt and the latest summary. This keeps the input size smaller while preserving immediate conversational context.
+- Background summarization: Summaries are generated asynchronously in the background so they don't block the active chat. If summarization fails, the system logs the error and continues; it will retry during subsequent summarization cycles.
+- Provider rotation & resiliency: When using Cloudflare worker providers or multiple API keys, the system rotates indices and keys to avoid throttling. Summaries and requests are sent through the same provider route and will respect provider-specific requirements (for example, sending an `index` field when using Cloudflare Workers).
+
+Configurable settings
+- summarizeAfter: Number of messages per summarization batch (default 20). When this many non-system messages accumulate, the app will produce a summary for that segment.
+- retainMessages: Number of recent messages to keep after summarization (default 10). These messages are sent directly with the prompt to preserve local conversational continuity.
+- temperature: Optional override for the model temperature used in chat requests or summarization (leave empty to use provider/API defaults).
+- maxTokens: Optional override for max tokens for completions and summarization (leave empty to use provider/API defaults).
+
+Best practices
+- Tune `summarizeAfter` and `retainMessages` based on the model you use (larger models can handle larger contexts). Lower `retainMessages` when you need to conserve tokens.
+- Keep summaries concise but informative — the summarization prompt in the app aims for clear, structured summaries focusing on topics, decisions, and facts necessary to continue the conversation.
+- Monitor token usage and set `maxTokens` conservatively if you are on a rate limit or cost-sensitive provider.
+
+How it works (implementation notes)
+- The app builds a `messages` array that includes:
+   - the system prompt (including the stored summary when present),
+   - the most recent retained user/assistant messages,
+   - the latest user message triggering the request.
+- When the configured `summarizeAfter` threshold is reached, older segments are summarized using the same chat completion endpoint in the background. The produced summary is stored in the chat object and used as system context for later requests.
+- Summarization requests use a low temperature (for determinism) and a higher `max_tokens` to allow longer, structured summaries.
+
+If you want to change defaults or experiment with different summarization prompts, check the implementation in `lib/api.ts`, `store/chatStore.ts`, and the settings UI in `components/settings/ContextControls.tsx`.
+
+
 ## Deployment
 
 ### Vercel (Recommended)
