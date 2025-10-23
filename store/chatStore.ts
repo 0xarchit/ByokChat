@@ -68,12 +68,16 @@ export const useChatStore = create<ChatStore>((set, get) => ({
   deleteChat: async (chatId) => {
     await chatsDB.removeItem(chatId);
     await messagesDB.removeItem(chatId);
-    set((state) => ({
-      chats: state.chats.filter((c) => c.id !== chatId),
-      currentChatId:
-        state.currentChatId === chatId ? null : state.currentChatId,
-      messages: { ...state.messages, [chatId]: undefined },
-    }));
+    set((state) => {
+      const newMessages = { ...state.messages };
+      delete newMessages[chatId];
+      return {
+        chats: state.chats.filter((c) => c.id !== chatId),
+        currentChatId:
+          state.currentChatId === chatId ? null : state.currentChatId,
+        messages: newMessages,
+      };
+    });
   },
 
   setCurrentChat: (chatId) => {

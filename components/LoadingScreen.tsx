@@ -29,7 +29,7 @@ export function LoadingScreen() {
   return (
     <div className="fixed inset-0 bg-background flex items-center justify-center z-50">
       <div className="flex flex-col items-center gap-6 max-w-md px-4">
-        {/* Logo or App Name */}
+        {}
         <div className="text-center">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
             BYOK Chat
@@ -37,19 +37,19 @@ export function LoadingScreen() {
           <p className="text-muted-foreground mt-2">AI-Powered Conversations</p>
         </div>
 
-        {/* Spinner */}
+        {}
         <div className="relative">
           <Loader2 className="h-12 w-12 animate-spin text-primary" />
           <div className="absolute inset-0 h-12 w-12 animate-ping rounded-full bg-primary/20" />
         </div>
 
-        {/* Loading Steps */}
+        {}
         <div className="text-center space-y-2">
           <p className="text-sm font-medium text-foreground animate-pulse">
             {loadingSteps[currentStep]}
           </p>
 
-          {/* Progress Bar */}
+          {}
           <div className="w-64 h-1.5 bg-muted rounded-full overflow-hidden">
             <div
               className="h-full bg-gradient-to-r from-primary to-primary/60 transition-all duration-500 ease-out"
@@ -60,7 +60,7 @@ export function LoadingScreen() {
           </div>
         </div>
 
-        {/* Additional Info */}
+        {}
         <p className="text-xs text-muted-foreground text-center">
           Please wait while we prepare your workspace
         </p>
