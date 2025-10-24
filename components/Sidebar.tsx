@@ -139,12 +139,19 @@ export function Sidebar({
               Import
             </Button>
           </div>
+          <label htmlFor="import-chats" className="sr-only">
+            Import chats
+          </label>
           <input
+            id="import-chats"
             ref={fileInputRef}
             type="file"
             accept=".json"
             onChange={handleImport}
             className="hidden"
+            title="Import chats"
+            placeholder="Import chats"
+            aria-label="Import chats"
           />
         </div>
 

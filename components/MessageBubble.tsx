@@ -129,7 +129,7 @@ export const MessageBubble = memo(
               )}
 
               {}
-              <div className="flex items-center gap-1 pt-1 opacity-0 group-hover/message:opacity-100 transition-opacity duration-200">
+              <div className="flex items-center gap-1 pt-2">
                 <Button
                   variant="ghost"
                   size="sm"
