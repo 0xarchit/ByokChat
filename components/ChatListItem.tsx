@@ -26,6 +26,10 @@ export function ChatListItem({
   const { deleteChat, loadChats } = useChatStore();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Truncate name to 20 characters
+  const displayName =
+    chat.name.length > 100 ? chat.name.substring(0, 100) + "..." : chat.name;
+
   const handleDelete = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (confirm(`Delete "${chat.name}"?`)) {
@@ -76,13 +80,15 @@ export function ChatListItem({
     <div
       onClick={onClick}
       className={cn(
-        "group flex items-center gap-1 px-2 py-1.5 rounded-lg cursor-pointer transition-colors",
+        "group flex items-center gap-1 px-2 py-1.5 rounded-lg cursor-pointer transition-colors w-full overflow-hidden",
         isActive ? "bg-primary/10 text-primary" : "hover:bg-muted/50"
       )}
     >
       <MessageSquare className="h-3.5 w-3.5 shrink-0" />
-      <span className="flex-1 truncate text-xs min-w-0">{chat.name}</span>
-      <div className="flex gap-0.5 shrink-0">
+      <span className="flex-1 text-xs min-w-0 block" title={chat.name}>
+        {displayName}
+      </span>
+      <div className="flex gap-0.5 shrink-0 ml-auto">
         <Button
           variant="ghost"
           size="icon"
