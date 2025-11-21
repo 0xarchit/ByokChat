@@ -44,9 +44,11 @@ export function AddProviderDialog({
   const [fetchedModels, setFetchedModels] = useState<string[]>([]);
   const [defaultModel, setDefaultModel] = useState<string>("");
   const [testingKeyIndex, setTestingKeyIndex] = useState<number | null>(null);
+  const [testingAllKeys, setTestingAllKeys] = useState(false);
   const [keyTestResults, setKeyTestResults] = useState<
     Record<number, "success" | "error" | null>
   >({});
+  const [showKeys, setShowKeys] = useState<Record<number, boolean>>({});
 
   const handleAddKey = () => {
     setApiKeys([...apiKeys, ""]);
@@ -124,6 +126,82 @@ export function AddProviderDialog({
     } finally {
       setTestingKeyIndex(null);
     }
+  };
+
+  const testAllApiKeys = async () => {
+    const keysToTest = apiKeys.filter((k) => k.trim());
+
+    if (keysToTest.length === 0) {
+      toast.error("No API keys to test");
+      return;
+    }
+
+    if (!apiUrl.trim()) {
+      toast.error("Please enter API URL first");
+      return;
+    }
+
+    const allModels = [
+      ...fetchedModels,
+      ...manualModels
+        .split(",")
+        .map((m) => m.trim())
+        .filter((m) => m),
+    ];
+
+    if (allModels.length === 0) {
+      toast.error(
+        "Please add at least one model first (fetch or add manually)"
+      );
+      return;
+    }
+
+    setTestingAllKeys(true);
+    setKeyTestResults({});
+
+    const chatUrl = apiUrl.replace(/\/+$/, "") + "/chat/completions";
+    const modelToUse = defaultModel || allModels[0];
+
+    for (let i = 0; i < apiKeys.length; i++) {
+      const key = apiKeys[i];
+      if (!key.trim()) continue;
+
+      try {
+        const response = await fetch(chatUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${key}`,
+          },
+          body: JSON.stringify({
+            model: modelToUse,
+            messages: [{ role: "user", content: "test" }],
+            max_tokens: 5,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error("API key validation failed");
+        }
+
+        setKeyTestResults((prev) => ({ ...prev, [i]: "success" }));
+      } catch (error) {
+        setKeyTestResults((prev) => ({ ...prev, [i]: "error" }));
+      }
+    }
+
+    setTestingAllKeys(false);
+
+    const successCount = Object.values(keyTestResults).filter(
+      (r) => r === "success"
+    ).length;
+    const failCount = Object.values(keyTestResults).filter(
+      (r) => r === "error"
+    ).length;
+
+    toast.success(
+      `Testing complete: ${successCount} valid, ${failCount} invalid`
+    );
   };
 
   const fetchModels = async () => {
@@ -351,15 +429,36 @@ export function AddProviderDialog({
             <div>
               <div className="flex items-center justify-between mb-2">
                 <Label>API Keys *</Label>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={handleAddKey}
-                >
-                  <Plus className="h-3 w-3 mr-1" />
-                  Add Key
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={testAllApiKeys}
+                    disabled={testingAllKeys || apiKeys.every((k) => !k.trim())}
+                  >
+                    {testingAllKeys ? (
+                      <>
+                        <Loader2 className="h-3 w-3 mr-1 animate-spin" />
+                        Testing All...
+                      </>
+                    ) : (
+                      <>
+                        <CheckCircle2 className="h-3 w-3 mr-1" />
+                        Test All
+                      </>
+                    )}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={handleAddKey}
+                  >
+                    <Plus className="h-3 w-3 mr-1" />
+                    Add Key
+                  </Button>
+                </div>
               </div>
 
               <div className="space-y-2">
@@ -368,7 +467,7 @@ export function AddProviderDialog({
                     <div className="flex gap-2">
                       <div className="flex-1 relative">
                         <Input
-                          type="password"
+                          type={showKeys[index] ? "text" : "password"}
                           value={key}
                           onChange={(e) =>
                             handleKeyChange(index, e.target.value)
@@ -382,11 +481,56 @@ export function AddProviderDialog({
                               : ""
                           }
                         />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          className="h-6 w-6 absolute right-2 top-1/2 -translate-y-1/2"
+                          onClick={() =>
+                            setShowKeys((prev) => ({
+                              ...prev,
+                              [index]: !prev[index],
+                            }))
+                          }
+                          title={showKeys[index] ? "Hide key" : "Show key"}
+                        >
+                          {showKeys[index] ? (
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                              <line x1="1" y1="1" x2="23" y2="23" />
+                            </svg>
+                          ) : (
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                              <circle cx="12" cy="12" r="3" />
+                            </svg>
+                          )}
+                        </Button>
                         {keyTestResults[index] === "success" && (
-                          <CheckCircle2 className="h-4 w-4 text-green-500 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                          <CheckCircle2 className="h-4 w-4 text-green-500 absolute right-10 top-1/2 -translate-y-1/2 pointer-events-none" />
                         )}
                         {keyTestResults[index] === "error" && (
-                          <XCircle className="h-4 w-4 text-red-500 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                          <XCircle className="h-4 w-4 text-red-500 absolute right-10 top-1/2 -translate-y-1/2 pointer-events-none" />
                         )}
                       </div>
                       <Button
